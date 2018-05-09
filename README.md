@@ -95,3 +95,87 @@ For this demonstration, the topic selected is 'myfirstthing/test' so go ahead an
 Subscription results
 ![Subscription results](https://lh3.googleusercontent.com/6LuTG8KR3kRrnz3Oy-Hz4cahcXepPcJa9pcGbLxpkDgahldZcLkVEfh32arbAYUK-eBY1Zvv_pRCnqwJBrBLCilGzPcU-Q-sAiKZmHt7NR73nb1jZbpJjvwR1nibiHwEeyRS3kLXCvijwqFkbWq_1n4qhJmIkCkvrm9nYwfksfn9-4aJplI6FZFgpoR9WAnvysnDc_2rkTlPR3v0Zl4w_9k1JS32UBMAAEAzLp043tXavfLgnW-cKGXvnr-5F0SrczUKQaIHZVFUcDModo37ntROpLXmeJgzMMsIa5zUYZAcHxkOLwOCO1c55sfuz6_5eAUK8x9Rahk9-rCv_Dj2BIkfW2hG5_MtihA0g4cVVam4-p1GioAblljd0QMIeJQupARlz0Qx1xp3NvSgGr6CH82PE3c4F1gdtpmZ2F3wU2_UN4-BgFaij5ZN8UrgL9ke1Mt-7AppvVoNHGkzVAkDa3jbRO9Ij_m-jghVyZrjdcekaK0keY_bIUgknHjMo4LFhPusyo-6C3ZrhFIrVLj5aISVq2fg9hxQhQdgFdltoIYSYzpL-rYCTARJCam1mKGQQQZdXFQg1z7VZhN1k124I9bZirayx3QCmAEktcQ9=w1510-h752-no)
 
+You can go ahead to play around with these tools some more but after this step, you are assured the credentials work and can proceed to implement same with your photon. 
+
+If you encountered any errors, you can go back and review the steps for setting up the IoT Core service or post an issue to this project.
+
+
+# Implementing the MQTT library for the Photon
+
+From my research into the beginnings of the MQTT library for the Arduino and now the Particle Core platforms, I would like to credit [Nicholas O'Leary](https://knolleary.net/) and [Hirotaka Niisato](https://github.com/hirotakaster/MQTT-TLS) for their work based on which this project was done. Hirotaka has been doing well to update the library and as at the time of writing this, the most recent was on Mar 25 2018.
+
+To test the library, first you need to provide the content of the certificates and private key you used for testing connectivity using MQTT fx into the sample sketch below.
+
+    #include "MQTT-TLS.h"
+
+	void callback(char* topic, byte* payload, unsigned int length);
+
+	#define AMAZON_IOT_ROOT_CA_PEM                                          \
+	"-----BEGIN CERTIFICATE----- \r\n"                                      \
+	"[ROOT CA CRT PEM]                                       \r\n"  \
+	"-----END CERTIFICATE----- "
+	const char amazonIoTRootCaPem[] = AMAZON_IOT_ROOT_CA_PEM;
+
+	#define CELINT_KEY_CRT_PEM                                              \
+	"-----BEGIN CERTIFICATE----- \r\n"                                      \
+	"[YOUR CLIENT KEY CRT PEM]                                       \r\n"  \
+	"-----END CERTIFICATE----- "
+	const char clientKeyCrtPem[] = CELINT_KEY_CRT_PEM;
+
+	#define CELINT_KEY_PEM                                                  \
+	"-----BEGIN RSA PRIVATE KEY-----\r\n"                                   \
+	"[YOUR PRIVATE KEY PEM]                                          \r\n"  \
+	"-----END RSA PRIVATE KEY----- "
+	const char clientKeyPem[] = CELINT_KEY_PEM;
+
+	/**
+	 * MQTT client("xxxxxxxxxx.amazonaws.com", 8883, callback);
+	 **/
+	MQTT client("[TLS mqtt server]", 8883, callback);
+
+	// recieve message
+	void callback(char* topic, byte* payload, unsigned int length) {
+	    char p[length + 1];
+	    memcpy(p, payload, length);
+	    p[length] = NULL;
+	    String message(p);
+	}
+
+
+	void setup() {
+	    // enable tls. set Root CA pem, private key file.
+	    client.enableTls(amazonIoTRootCaPem, sizeof(amazonIoTRootCaPem),
+	                     clientKeyCrtPem, sizeof(clientKeyCrtPem),
+	                     clientKeyPem, sizeof(clientKeyPem));
+					 
+    Serial.println("tls enable");
+
+    // connect to the server
+    client.connect("sparkclient");
+
+    // publish/subscribe
+    if (client.isConnected()) {
+        Serial.println("client connected");
+        client.publish("myfirstthing/outtest", "hello world!");
+        client.subscribe("myfirstthing/intest");
+    }
+	}
+
+	void loop() {
+	    if (client.isConnected()) {
+	        client.loop();
+	    }
+	    delay(200);
+	}
+
+The issue I personally faced because I was using an older version of the library had to do with keep-alive timeouts. This has now been incorporated into the library via a new constructor format: MQTT client("iot.eclipse.org", 1883, **60**, callback);
+
+Head over to the AWS IoT test client and subscribe to the 'myfirstthing/outtest' topic. You can also publish to the 'myfirstthing/intest' topic to checkout how the Photon behaves when it subscribed to topics.
+
+You can also do the above using MQTT fx if you are more comfortable with that.
+
+## Export a file
+
+You can export the current file by clicking **Export to disk** in the menu. You can choose to export the file as plain Markdown, as HTML using a Handlebars template or as a PDF.
+
+# Publishing Sensor Data via MQTT
