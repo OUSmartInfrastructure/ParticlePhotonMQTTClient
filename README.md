@@ -174,4 +174,135 @@ Head over to the AWS IoT test client and subscribe to the 'myfirstthing/outtest'
 
 You can also do the above using MQTT fx if you are more comfortable with that.
 
+
+
 # Publishing Sensor Data via MQTT
+
+Amazon expects you to do more with whatever data you publish to the IoT core service and has provided a number of services associated with this. For this project, we chose to write the sensor data to a DynamoDB table. 
+
+Although the services are readily available, there are some rules to follow and one of such rules is the format of the message you publish to the service. You will recall from the inbuilt client's test above that there was a message in green which read **'We cannot display the message as JSON, and are instead displaying it as UTF-8 String.'**
+
+Although generic strings works fine, Amazon expects you to provide your data in JSON format so the sensor in the next sketch, we will explore how to do this using the sensor data.
+
+    #include "application.h"
+	#include "math.h"
+	#include "src_mqtt/MQTT-TLS.h"
+	#include "src/quaternionFilters.h"
+	#include "src/BME280.h"
+	#include "src/constants.h"
+	#include "cert/certs.h"
+
+
+	//********************************//
+	//SENSOR OBJECTS
+	//********************************//
+	BME280 myBME;
+
+
+	//********************************//
+	//MQTT/TLS VARIABLES
+	//********************************//
+	void callback(char* topic, byte* payload, unsigned int length);
+	const char amazonIoTRootCaPem[] = AMAZON_IOT_ROOT_CA_PEM;
+	const char clientKeyCrtPem[] = CELINT_KEY_CRT_PEM;
+	const char clientKeyPem[] = CELINT_KEY_PEM;
+
+	unsigned long lastLogTime = millis();
+
+
+	MQTT client("a6pvdatjymurb.iot.us-west-2.amazonaws.com", 8883, callback);
+
+	// recieve message
+	void callback(char* topic, byte* payload, unsigned int length)
+	{
+	    char p[length + 1];
+	    memcpy(p, payload, length);
+	    p[length] = NULL;
+	    String message(p);
+	    if (DBGLVL2) Serial.println(message);
+	}
+
+	String constructMQTTPayload(double temp, double pres, double hum, double ax, double ay, double az)
+	{
+	  String ret = "{";
+	  ret += "\"device\":";
+	  ret += "\"iot_prj02_sensor_module\",";
+	  ret += "\"temperature\":";
+	  ret += "\""+String(temp)+"\",";
+	  ret += "\"pressure\":";
+	  ret += "\""+String(pres)+"\",";
+	  ret += "\"humidity\":";
+	  ret += "\""+String(hum)+"\",";
+	  ret += "}";
+
+	  if (DBGLVL2) Serial.println(ret);
+
+	  return ret;
+	}
+
+	void logSensorData(String msg)
+	{
+	  lastLogTime = millis();
+	  if (DBGLVL2) Serial.println(msg);
+	  client.publish(MQTT_TOPIC, msg);
+	}
+
+	//********************************//
+	//PARTICLE SETUP
+	//********************************//
+	void setup()
+	{
+	    // Initialise I2C communication as MASTER
+	    Wire.begin();
+	    // Initialise Serial communication, set baud rate = 9600
+	    Serial.begin(9600);
+	    delay(300);
+
+
+	     // enable tls. set Root CA pem, private key file.
+	     client.enableTls(amazonIoTRootCaPem, sizeof(amazonIoTRootCaPem),
+	                      clientKeyCrtPem, sizeof(clientKeyCrtPem),
+	                      clientKeyPem, sizeof(clientKeyPem));
+	     if (DBGLVL0) Serial.println("tls enable");
+
+	     // connect to the server
+	     client.connect("sparkclient");
+
+	     // publish/subscribe
+	     if (client.isConnected()) {
+	         if (DBGLVL0) Serial.println("client connected");
+	         client.publish(MQTT_TOPIC, "I'm alive");
+	         //client.subscribe("iot_prj02_sensor");
+	     }
+	}
+
+	//********************************//
+	//PARTICLE LOOP
+	//********************************//
+	void loop()
+	{
+	    if (client.isConnected()) {
+	        client.loop();
+	    }
+
+	    if(millis() - lastLogTime > 10000)
+	    {
+	        String msg = constructMQTTPayload(myBME.bme280_getFtemp(), myBME.bme280_getPressure(), myBME.bme280_getHumidity(), myIMU.ax, myIMU.ay, myIMU.az);
+	        logSensorData(msg);
+	    }
+
+
+	}
+
+
+
+The whole point of this sketch is to format the sensor data appropriately before publishing it with the MQTT broker (Iot Core). For reference purposes, the entire published string for this application looks like this:
+
+    {
+	  "device": "iot_prj02_sensor_module",
+	  "temperature": ""79.523398",
+	  "pressure": "1041.213648",
+	  "humidity": "0.000000",
+	}
+
+When data of this format is published, the error I mentioned in the text above does not show up and this generally means, the AWS service can do more with the data.
