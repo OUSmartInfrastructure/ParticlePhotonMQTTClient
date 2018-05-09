@@ -76,5 +76,7 @@ The next requires that you download an MQTT client to test the credentials provi
 The MQTT client of choice is [MQTT fx](http://mqttfx.jensd.de/index.php/download). The link to download this was also provided under the requirements section.
 
 Once it has been downloaded, start it and create a new connection profile. Your profile should be setup to look like this.
-![MQTT fx Connection Profile](https://photos.google.com/album/AF1QipML6bwNjfr3cV0mi2HNI7Ll0CNbZSFUIJKSzByd/photo/AF1QipMXFK_95EfelVm-1p4SbrfHth5q6tzy_7PCGKEQ?key=CKn-7aC18tu0FQ)
+![MQTT fx Connection Profile](https://lh3.googleusercontent.com/QAByr3t5FToos3TXXjI7jkWPoYZLwVHiUZfc7EWfJCLrnk5RG5MaAVzDHKxBhMZvb2WO4qVswrtQXpZatFg6PwsZ_ZBYvNJdtry-xjaDO_WNXoSpzRRTnkcqVqrly3ljSbIY34jcrxDQB5JVUnRQ7NxRExvTATmvX6bosuXyqT4cIQtWkMWAzHPl1u78_rvO5WsVtX_7gvxB7jbUwiI5VAFFiaG6F8XsD1g0qqD8seDfh6sXyPnH4uBayB8C4xNIEIcIi13bgmmUJErW5LbgpG6jbVGMwZOBI0Q7l2x3jfwIsyscJflBql2E44a-NZUnkMqunLlNLYbOOx7CZ-pbUHj6_EXsILO3jhSZV20YHwOfvaeGV8fh7OANDGkv0Ji-Rd7bxBFhQZ9aRoMM-jV7cbSUb1STXePVvF-LOinXFCOjyMfDEjXFmeZrBuo-TiWjNs7ybC9ahabzxSu2Jl_hU0t4ON-7qCB-rqNxHzxeFNwjmPflEA8h0DGC0xsBXN_Aoim5kBnj8F2zWar9Foy0KKq-kFYqunLlzURXJH4gRThXbGBuIianbMpaHlwjhPTugU_e3wib2a_4AaraadON6qbTTyYHPKsh_iVwpu2w=w707-h709-no)
+
+The CA file and Client Certificate files should be easily identifiable. If you missed the CA file, you can also obtain one from [here](//https://docs.aws.amazon.com/iot/latest/developerguide/managing-device-certs.html). The client key file is the same as your private key.
 
