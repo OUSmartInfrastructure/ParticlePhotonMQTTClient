@@ -174,8 +174,4 @@ Head over to the AWS IoT test client and subscribe to the 'myfirstthing/outtest'
 
 You can also do the above using MQTT fx if you are more comfortable with that.
 
-## Export a file
-
-You can export the current file by clicking **Export to disk** in the menu. You can choose to export the file as plain Markdown, as HTML using a Handlebars template or as a PDF.
-
 # Publishing Sensor Data via MQTT
