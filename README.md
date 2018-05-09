@@ -45,3 +45,24 @@ To test the sensor exclusively, you can run the sketch below in your web IDE and
 	}
 
 		
+
+## Setting up the AWS IoT Core service
+Amazon usually requires that you first setup an account with them. Once the account has been setup, head over to the [IoT Core](https://aws.amazon.com/iot-core/) site and log into the console.
+
+In the console, search for the IoT Core service and select it to get into the IoT Core service's console. You should note that Amazon is constantly evolving their platform so moving forward if you are accessing this resource at some time later than 2018 there may be little changes but it shouldn't be hard to figure things out.
+
+The following steps are also available via a youtube video.
+
+ 1. On the left menu navigation pane, select 'Manage'
+ 2. Then select 'Things'. If you have no Thing created, you will be prompted to create one if not, click on 'Create' to create one.
+ 3. Since we will be working with just one thing, which is out Photon+BME280 bundle, select 'Create a Single Thing'
+ 4. Give your thing a very cool name. In this instance, I called mine 'MyFirstThing'
+ 5. Besides the name, leave everything else as their defaults and click select 'Next'
+ 6. The next screen prompts you to add a certificate (I'll elaborate some more about this step later). Select 'One-click certificate creation (recommended)'
+ 7. On the next screen, you will be presented with four downloadable items. Two key files and two certificate files, be sure to download each of them and save them some place you can easily remember
+ 8. Then select 'Activate' to activate your new certificate
+ 9. On the same screen, select 'Attach a Policy'
+ 10. If no policies are present, you will be prompted to create one. Give your policy a cool name like 'Policy_for_MyFirstThing' like I did. Under action, select 'iot:&ast;' and under Resource ARN, provide '&ast;'. Then under effect, check 'Allow' and save the policy
+ 11. Navigate back to the main menu and select 'Certificates' under 'Secure'. For the active certificate you just created, click on the tri-dot menu popup and first attach a policy and then attach your thing. Both should be what you just created.
+ 12. 
+ 
