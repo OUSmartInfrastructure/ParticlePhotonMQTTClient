@@ -306,3 +306,23 @@ The whole point of this sketch is to format the sensor data appropriately before
 	}
 
 When data of this format is published, the error I mentioned in the text above does not show up and this generally means, the AWS service can do more with the data.
+
+## Writing published data to a DynamoDB table
+
+[Amazon _DynamoDB_](https://www.googleadservices.com/pagead/aclk?sa=L&ai=DChcSEwjQjs_06_jaAhWGj7MKHStrDEcYABAAGgJxbg&ohost=www.google.com&cid=CAESEeD2rrAvOaxWHeA_AaBYxK9O&sig=AOD64_1D5YEguLFmvBBFfNHpIdzXvPMThA&q=&ved=0ahUKEwiW88b06_jaAhVpS98KHY28DRoQ0QwIKg&adurl=) is a fast and flexible NoSQL database service for all applications that need consistent, single-digit millisecond latency at any scale. It is a fully managed cloud database and supports both document and key-value store models.
+
+ 1. To write sensor data to a DDB table, first head to the AWS IOT Core hompage and select 'Act'. On the next screen, create a new rule. 
+ 2. Give your rule a name and a description. 
+ 3. Leave all fields as default except for attribute for which you should supply "&ast;". 
+ 4. For the topic, provide the topic you are publishing to and leave the condition field as it is.
+ 5. Under action, select 'Insert a message into a DynamoDB table' under provide the topic you published to.
+ 6. Select your table's name or create a new resource if none exists
+ 7. You will also need to create a new IAM role so be sure to apply the 'DynamoDBFullAccess' policy to it.
+ 8. Save your new rule
+ 
+Overall, the setup should look like this:
+![enter image description here](https://lh3.googleusercontent.com/XUNfGltjvBQtmYZB_WMgP4hzUKLll3_D5yrFuqan9oJGYEoxg_dZ47iFfcDkyvUKRIVaB1JGA719IzmqCeM9g14Dz6ihZGl6l2Irhpnckzprh20KS778vzbasZBM9b5hnDejyviypf7b7lXIcDm3gNGkOna0Ax8mQP2o3fhgi8E2QOFOw8OALP0YUjOmOpv_hQFEW3dlLqXdkRek5CXtTw-Ng_zf673SMqN28T4lzQ9HJi9Qm73J6g5b_f_XjmPf9LTlfjoTUHDDVIvDt2_qk1-DQQuD5nza4y_ZPhH3Oi1p0p4agHu_jIARiQt_D88b5F8sz2p5a-pqgnQkrQAQpgbBAFoxGzzg0gyT2PZphyFmO36O5pXPCPgE0uPxahzQnCeblrbLLvdoAvJPRo7yxclDayRcEu1nT5zt8nwSwWnWSEGqRKFKjH61fkbU1vXltcg6cvDuWH1eJ03pOxGANemSfEKMpdEXSYqjkEoqMLapDwTeKEO_fRSyDtYxePw_CqYDi8rI8EDHLBGPwa4PtqGKusAe5cL88BeiYxA7tW0KkvWXBOCekDVfAf0_8SW7nUrBF0KMX5VKgypaHdNioh81vZHTmkgLWE93O7U6=w825-h870-no)
+
+Following this, when the sketch is run, all the data should be populated in the DDB table as show below:
+![DDB](https://lh3.googleusercontent.com/3Idv3i85ucSpGUDB7EL4FjlIZ6vurAdmmEIxgnbFDZhdeQKyaMp9mCbSEevcNrM0tgWv-4EHl9pOUbCsw-i11oAfFNyBiSXlCx_-Ah5dLvQa5C2wX3W5Rzn9cVQJe87wdwMfD6j2RNI174sEc7Zxnou5Fh96kz7eQtD3Ws-euFazRxwrfsJYVNJSY_WMZxsIr0ui30HhgEBm5kyBW38NclQrD0Myb9B47ZRxR5LVQKzCsFhogJ3DhkIBBlBLJi3g90ss8neF8c3mpdYErL_satglD8uSMHe0lnp2ssXe8hhOEMoMHx9EhTkrozDCsrkSureW8xXCx84smW5aU_LPqUdpPHqsi24aAqm2zovoLhxJjQIxOhbK_a8IpimFAsG6wdn1KjgrDNNZCqhptsfnf_BQoIjUiA2gK3hK2q9DNuXRoKepeKdpN_kQsknCM0Fp8MxVpGiyn6TNO0LLclhY2WZSLnu1J7qCLgFihEax5J2A6pMqf6RbQ1hSKpAbkwBStF4r8HGB1OFFK7KzWUZsKByYbt1CUoGgLHKHQj62v6JCLhtwQWvEXLTMFWU8XmOUcMlg3K0IkXX8IJxDVMnjKfQN2-7KmZ3x_K1N-hKH=w1900-h948-no)
+
