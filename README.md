@@ -64,5 +64,17 @@ The following steps are also available via a youtube video.
  9. On the same screen, select 'Attach a Policy'
  10. If no policies are present, you will be prompted to create one. Give your policy a cool name like 'Policy_for_MyFirstThing' like I did. Under action, select 'iot:&ast;' and under Resource ARN, provide '&ast;'. Then under effect, check 'Allow' and save the policy
  11. Navigate back to the main menu and select 'Certificates' under 'Secure'. For the active certificate you just created, click on the tri-dot menu popup and first attach a policy and then attach your thing. Both should be what you just created.
- 12. 
+ 12. Back at the main menu, select Manage and then select Things. Under your thing, select Interact to obtain the Rest API Endpoint for your thing
+ 13. Your thing should be setup now, we will test it in the next steps
  
+ 
+ 
+## Testing connectivity to your 'Thing'
+
+The next requires that you download an MQTT client to test the credentials provided. Amazon uses some of the four files you downloaded to authenticate you as an authoritarian over the thing you are trying to access as well as for authenticating the TLS communications with its servers.
+
+The MQTT client of choice is [MQTT fx](http://mqttfx.jensd.de/index.php/download). The link to download this was also provided under the requirements section.
+
+Once it has been downloaded, start it and create a new connection profile. Your profile should be setup to look like this.
+![MQTT fx Connection Profile](https://photos.google.com/album/AF1QipML6bwNjfr3cV0mi2HNI7Ll0CNbZSFUIJKSzByd/photo/AF1QipMXFK_95EfelVm-1p4SbrfHth5q6tzy_7PCGKEQ?key=CKn-7aC18tu0FQ)
+
