@@ -3,6 +3,7 @@
 #include "src_mqtt/MQTT-TLS.h"
 #include "src/BME280.h"
 #include "src/constants.h"
+#include "cert/cert.h"
 
 
 //********************************//
