@@ -78,5 +78,20 @@ The MQTT client of choice is [MQTT fx](http://mqttfx.jensd.de/index.php/download
 Once it has been downloaded, start it and create a new connection profile. Your profile should be setup to look like this.
 ![MQTT fx Connection Profile](https://lh3.googleusercontent.com/QAByr3t5FToos3TXXjI7jkWPoYZLwVHiUZfc7EWfJCLrnk5RG5MaAVzDHKxBhMZvb2WO4qVswrtQXpZatFg6PwsZ_ZBYvNJdtry-xjaDO_WNXoSpzRRTnkcqVqrly3ljSbIY34jcrxDQB5JVUnRQ7NxRExvTATmvX6bosuXyqT4cIQtWkMWAzHPl1u78_rvO5WsVtX_7gvxB7jbUwiI5VAFFiaG6F8XsD1g0qqD8seDfh6sXyPnH4uBayB8C4xNIEIcIi13bgmmUJErW5LbgpG6jbVGMwZOBI0Q7l2x3jfwIsyscJflBql2E44a-NZUnkMqunLlNLYbOOx7CZ-pbUHj6_EXsILO3jhSZV20YHwOfvaeGV8fh7OANDGkv0Ji-Rd7bxBFhQZ9aRoMM-jV7cbSUb1STXePVvF-LOinXFCOjyMfDEjXFmeZrBuo-TiWjNs7ybC9ahabzxSu2Jl_hU0t4ON-7qCB-rqNxHzxeFNwjmPflEA8h0DGC0xsBXN_Aoim5kBnj8F2zWar9Foy0KKq-kFYqunLlzURXJH4gRThXbGBuIianbMpaHlwjhPTugU_e3wib2a_4AaraadON6qbTTyYHPKsh_iVwpu2w=w707-h709-no)
 
-The CA file and Client Certificate files should be easily identifiable. If you missed the CA file, you can also obtain one from [here](//https://docs.aws.amazon.com/iot/latest/developerguide/managing-device-certs.html). The client key file is the same as your private key.
+The CA file and Client Certificate files should be easily identifiable. If you missed the CA file, you can also obtain one from [here](//https://docs.aws.amazon.com/iot/latest/developerguide/managing-device-certs.html). The client key file is the same as your private key. Go on to save the profile.
+
+From the main screen of the MQTT fx client, select the profile you just created and click connect. You should see the round grey indicator in the top-right section turn green indicating a successful connection.
+
+It should look like this.
+![MQTT fx in connected mode](https://lh3.googleusercontent.com/EL6zGXfKd6B6wPUz5HxOBeSwyGswqm8pxvXLvZ_O8f721YwdrlrPbuqO0TZqZaATKl1LJQIUpyNDF1-x94QlnG3dvgWtlgADItQgsjt8tXJiZedRu35_SgTRzKjvopaQ8cNWklYU191caUibpVAUsV8rPTEMwSZheSsmISzARuBQBTqGvxdCchypW3tcRW00h5g4te4W9HklIGOnA9H7RSCKmR7x6DH3PEGUW35PpCstk8EuOHq6KGOk_g8a1LtMLVILDbddybpj1T3MKtLbbfjtfBdZUuFat_zbUDFPXm9Ge6rRu3oA-qDAW1eFWqMKavVGFELGA3J6CKzv7Nlg0N7YO5LBG-UunVifPxPINNR-I6mjlUJGFrO5OmtYHPshdive1u1UXnJKyhUmF_A9Oo_8fdP4eFLQaX6v3pdExbnPhff5SNWdbXHjtgSrLwWU6YFWDeiNkNd2WkGYMv-IxOGzVkaVC4ozn-s9CGcJfdAvma4QOqhMdbdr-sZugK4o_HsAdcua34F4uDjdmPLY9GbFzt2J4zWiY8W6Qjg9lV5HWVKzsaF0vHXNUo0y6aaiaUW7CHiIABkj2KWFcaSODDGqLMMN4d7jdfy91iwy=w1003-h223-no)
+
+Now, head back to your IoT Core home page and let's have some fun!
+In the left navigation pane, locate and select 'Test'. It should start the IoT core's inbuilt MQTT client also for testing purposes. What we are going tp do now is to publish to some topic from MQTT fx and subscribe to the same topic inside the inbuilt MQTT client.
+
+For this demonstration, the topic selected is 'myfirstthing/test' so go ahead and publish to this topic inside MQTT fx and wait for the respose inside the subscribed section of the inbuilt MQTT client.
+
+![MQTT fx test publish](https://lh3.googleusercontent.com/a6W-owfzYGWO5YR1l4GO6UxYyUYKG0yUjbI_cKDV8hlh9n1h8ueMOST4cCwc1LzzA7Aymv0OuXzqNdvuv0RX9oeIb9yr0oowQB7uYQT_kwEYM7miOu0L8cZdqKDQiIIZ-727l8ahlGeDNmQeW_gSihsicDqcLboqO8D-Yq7bWoykI9CrTbhQCorKV7Zb2g1MqZ-QW5u2B020S2-HdcUXMVKg3GTs8AeQjk3hVgu8G8esXeOnJhq8OyiwTkr4n2I0RU_5mtVods9uJGKw54uaXR1gSvEYEWZkflzoDBeCOo9xOOs6RlXI7BXzSZNMV4CugiJcD5UmOesArXW6TKsGXfkZSCr1zhZE0VG8A9JWF71ZHS-4iwJDlKaBWoPm3caNj9Ekdc-o5wenpgZ3OqtE3K6R5qUbZCMI2IgXdKf8kZdV6ZQBvSXl1h0DYV3Z1DVx-j_hRtiz5boW5djVYqSFcb-d709LIFmLMp9I2EAsXMkAPHP-oN4sivjOwMXTgYCjbNOuZEmnVeUcuaAFUxbrZI1JQrggW22jhoSzO0l8G_DBjd0RFUIZZTrjHpHRsWsINBcQiJ_jjKD-OgmCJg7Om0AeQGQoI5PPgW6mWYSZ=w1002-h271-no)
+
+Subscription results
+![Subscription results](https://lh3.googleusercontent.com/6LuTG8KR3kRrnz3Oy-Hz4cahcXepPcJa9pcGbLxpkDgahldZcLkVEfh32arbAYUK-eBY1Zvv_pRCnqwJBrBLCilGzPcU-Q-sAiKZmHt7NR73nb1jZbpJjvwR1nibiHwEeyRS3kLXCvijwqFkbWq_1n4qhJmIkCkvrm9nYwfksfn9-4aJplI6FZFgpoR9WAnvysnDc_2rkTlPR3v0Zl4w_9k1JS32UBMAAEAzLp043tXavfLgnW-cKGXvnr-5F0SrczUKQaIHZVFUcDModo37ntROpLXmeJgzMMsIa5zUYZAcHxkOLwOCO1c55sfuz6_5eAUK8x9Rahk9-rCv_Dj2BIkfW2hG5_MtihA0g4cVVam4-p1GioAblljd0QMIeJQupARlz0Qx1xp3NvSgGr6CH82PE3c4F1gdtpmZ2F3wU2_UN4-BgFaij5ZN8UrgL9ke1Mt-7AppvVoNHGkzVAkDa3jbRO9Ij_m-jghVyZrjdcekaK0keY_bIUgknHjMo4LFhPusyo-6C3ZrhFIrVLj5aISVq2fg9hxQhQdgFdltoIYSYzpL-rYCTARJCam1mKGQQQZdXFQg1z7VZhN1k124I9bZirayx3QCmAEktcQ9=w1510-h752-no)
 
