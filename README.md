@@ -53,7 +53,7 @@ Amazon usually requires that you first setup an account with them. Once the acco
 
 In the console, search for the IoT Core service and select it to get into the IoT Core service's console. You should note that Amazon is constantly evolving their platform so moving forward if you are accessing this resource at some time later than 2018 there may be little changes but it shouldn't be hard to figure things out.
 
-The following steps are also available via a youtube video.
+The following steps are also available via a [youtube video](https://youtu.be/97vt4aYdz2k).
 
  1. On the left menu navigation pane, select 'Manage'
  2. Then select 'Things'. If you have no Thing created, you will be prompted to create one if not, click on 'Create' to create one.
