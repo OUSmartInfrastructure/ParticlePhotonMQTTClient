@@ -21,7 +21,7 @@ Once the photon has been [setup](https://docs.particle.io/guide/getting-started/
 
 A slightly modified (for simplicity) version of the library by Thomas Rockenbauer (https://github.com/hl68fx) who adapted the original library (for Arduino) to work with Particle Photon & Core was used.
 
-By default, the sensor should be addressable via 0x76, but there have been some cases where it was only accesible via 0x77. Should you run into such problems be sure to first run the adress scan sketch also included in this project. The file to look for is i2cscan.ino and all this will do is to scan the entire I2C addressable block and report which ones have something connected via the serial monitor so be sure to setup that one too.
+By default, the sensor should be addressable via 0x76, but there have been some cases where it was only accesible via 0x77. Should you run into such problems be sure to first run the adress scan sketch also included in this project in the examples directory. The file to look for is i2cscan.ino and all this will do is to scan the entire I2C addressable block and report which ones have something connected via the serial monitor so be sure to setup that one too.
 
 To test the sensor exclusively, you can run the sketch below in your web IDE and be sure to lookout for the readings in your serial monitor.
 
@@ -47,6 +47,8 @@ To test the sensor exclusively, you can run the sketch below in your web IDE and
 		
 
 ## Setting up the AWS IoT Core service
+**NB: Amazon is constantly updating the AWS platform, so there is a possibility that some of the screenshots used in this demonstration may have changed over time.**
+
 Amazon usually requires that you first setup an account with them. Once the account has been setup, head over to the [IoT Core](https://aws.amazon.com/iot-core/) site and log into the console.
 
 In the console, search for the IoT Core service and select it to get into the IoT Core service's console. You should note that Amazon is constantly evolving their platform so moving forward if you are accessing this resource at some time later than 2018 there may be little changes but it shouldn't be hard to figure things out.
@@ -325,4 +327,5 @@ Overall, the setup should look like this:
 
 Following this, when the sketch is run, all the data should be populated in the DDB table as show below:
 ![DDB](https://lh3.googleusercontent.com/3Idv3i85ucSpGUDB7EL4FjlIZ6vurAdmmEIxgnbFDZhdeQKyaMp9mCbSEevcNrM0tgWv-4EHl9pOUbCsw-i11oAfFNyBiSXlCx_-Ah5dLvQa5C2wX3W5Rzn9cVQJe87wdwMfD6j2RNI174sEc7Zxnou5Fh96kz7eQtD3Ws-euFazRxwrfsJYVNJSY_WMZxsIr0ui30HhgEBm5kyBW38NclQrD0Myb9B47ZRxR5LVQKzCsFhogJ3DhkIBBlBLJi3g90ss8neF8c3mpdYErL_satglD8uSMHe0lnp2ssXe8hhOEMoMHx9EhTkrozDCsrkSureW8xXCx84smW5aU_LPqUdpPHqsi24aAqm2zovoLhxJjQIxOhbK_a8IpimFAsG6wdn1KjgrDNNZCqhptsfnf_BQoIjUiA2gK3hK2q9DNuXRoKepeKdpN_kQsknCM0Fp8MxVpGiyn6TNO0LLclhY2WZSLnu1J7qCLgFihEax5J2A6pMqf6RbQ1hSKpAbkwBStF4r8HGB1OFFK7KzWUZsKByYbt1CUoGgLHKHQj62v6JCLhtwQWvEXLTMFWU8XmOUcMlg3K0IkXX8IJxDVMnjKfQN2-7KmZ3x_K1N-hKH=w1900-h948-no)
+
 
